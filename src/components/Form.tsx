@@ -92,19 +92,18 @@ const Form: React.FC = (): JSX.Element => {
 
             <form onSubmit={(e)=>handleSubmit(e)}>
                 <div className="lg:sticky lg:top-[200px] lg:left-[65%] mx-auto bg-gray-200 w-fit px-4 py-4 sm:px-6 sm:py-6 flex justify-center flex-col rounded-xl h-3/4">
-                    {products.map((item, index) => (
-                        <div className="mt-4">                    
-                            <ProductCard
-                                currentQuantity={item.currentQuantity}
-                                onQuantityChange={(quantity) => handleQuantityChange(index, quantity)}
-                                key={index}
-                                image={item.image}
-                                realprice={item.realprice}
-                                discountprice={item.discountprice}
-                                productname={item.productname}
-                            />
-                        </div>
-                    ))}
+                {products.map((item, index) => (
+                    <div className="mt-4" key={index}> {/* Add key prop here */}
+                        <ProductCard
+                            currentQuantity={item.currentQuantity}
+                            onQuantityChange={(quantity) => handleQuantityChange(index, quantity)}
+                            image={item.image}
+                            realprice={item.realprice}
+                            discountprice={item.discountprice}
+                            productname={item.productname}
+                        />
+                    </div>
+                ))}
                     <div className="border-t-2 font-bold border-t-slate-500 mt-16 flex flex-row justify-between">
                         <label>Shipping</label>
                         <label>${shipcost.toFixed(2)}</label>
