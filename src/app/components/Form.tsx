@@ -2,8 +2,8 @@
 import React, { useState, FormEvent } from "react";
 import Image from "next/image";
 import ProductCard from "./ProductCard";
-import photo1 from "../../public/photo1.png";
-import photo2 from "../../public/photo2.png";
+import photo1 from "../../../public/photo1.png";
+import photo2 from "../../../public/photo2.png";
 import { MdEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
@@ -11,7 +11,7 @@ import { IoMdHome } from "react-icons/io";
 import { FaCity } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
 import { BsFillPostageFill } from "react-icons/bs";
-import Success from "../app/success/page";
+import Success from "../success/page";
 import { useRouter } from "next/navigation";
 
 interface Product {
