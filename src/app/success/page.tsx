@@ -29,16 +29,27 @@ export default function Success() {
     const [clickedBill, setClicked] = React.useState(false);
     const router = useRouter();
     
-    let formData: FormData | null = null;
-    if (typeof window !== 'undefined') {
+    const [formData, setFormData] = React.useState<FormData | null>(null);
+
+    // Function to extract formData from the query string
+    const parseFormData = () => {
         const queryParams = window.location.search.substring(1);
         const searchParams = new URLSearchParams(queryParams);
-
         const formDataString = searchParams.get('formData');
         const decodedFormData = formDataString ? decodeURIComponent(formDataString) : null;
-        formData = decodedFormData ? JSON.parse(decodedFormData) : null;
-    }
+        return decodedFormData ? JSON.parse(decodedFormData) : null;
+    };
 
+    React.useEffect(() => {
+        if (typeof window !== 'undefined') {
+            // This code will only run on the client-side
+            const data = parseFormData();
+            setFormData(data);
+            if (!data) {
+                router.push("/");
+            }
+        }
+    }, [router]);
 
   console.log(formData)
 
