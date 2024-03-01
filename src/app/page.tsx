@@ -3,7 +3,6 @@ import Form from "@/components/Form";
 import Success from "../app/success/page";
 import Image from "next/image";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Success from './Success'
 
 export default function Home() {
   return (
