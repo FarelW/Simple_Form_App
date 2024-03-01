@@ -28,13 +28,16 @@ interface FormData {
 export default function Success() {
     const [clickedBill, setClicked] = React.useState(false);
     const router = useRouter();
-    const queryParams = window.location.search.substring(1);
-    const searchParams = new URLSearchParams(queryParams);
+    
+    let formData: FormData | null = null;
+    if (typeof window !== 'undefined') {
+        const queryParams = window.location.search.substring(1);
+        const searchParams = new URLSearchParams(queryParams);
 
-
-    const formDataString = searchParams.get('formData');
-    const decodedFormData = formDataString ? decodeURIComponent(formDataString) : null;
-    const formData: FormData | null = decodedFormData ? JSON.parse(decodedFormData) : null;
+        const formDataString = searchParams.get('formData');
+        const decodedFormData = formDataString ? decodeURIComponent(formDataString) : null;
+        formData = decodedFormData ? JSON.parse(decodedFormData) : null;
+    }
 
 
   console.log(formData)
