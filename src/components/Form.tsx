@@ -1,88 +1,92 @@
 "use client"
-import  React from "react";
-import { FormEvent } from 'react';
-import Image from 'next/image';
+import React, { useState, FormEvent } from "react";
+import Image from "next/image";
 import ProductCard from "./ProductCard";
 import photo1 from "../../public/photo1.png";
 import photo2 from "../../public/photo2.png";
 import { MdEmail } from "react-icons/md";
-import { FaPhone } from "react-icons/fa6";
+import { FaPhone } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { IoMdHome } from "react-icons/io";
 import { FaCity } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
 import { BsFillPostageFill } from "react-icons/bs";
 import Success from "../app/success/page";
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from "next/navigation";
 
 interface Product {
-    image: JSX.Element;
-    realprice: number;
-    discountprice: number;
-    productname: string;
-    currentQuantity: number;
+  image: JSX.Element;
+  realprice: number;
+  discountprice: number;
+  productname: string;
+  currentQuantity: number;
 }
 
 const Form: React.FC = (): JSX.Element => {
-    const [products, setProducts] = React.useState<Product[]>([
-        {
-            image: <Image src={photo1} alt="Product1" width={150} height={150} className=" rounded-2xl" />,
-            realprice : 94.99,
-            discountprice : 54.99,
-            productname : "Vintage Backbag",
-            currentQuantity : 1,
-        },
-        {
-            image : <Image src={photo2} alt="Product2" width={150} height={150} className=" rounded-2xl" />,
-            realprice : 124.99,
-            discountprice : 74.99,
-            productname : "Levi Shoes",
-            currentQuantity : 1,
-        },
-    ])
-    
-    const [totalPrice, setTotalPrice] = React.useState(0);
-    const shipcost = 19
+  const [products, setProducts] = useState<Product[]>([
+    {
+      image: (
+        <Image src={photo1} alt="Product1" width={150} height={150} className="rounded-2xl" />
+      ),
+      realprice: 94.99,
+      discountprice: 54.99,
+      productname: "Vintage Backbag",
+      currentQuantity: 1,
+    },
+    {
+      image: (
+        <Image src={photo2} alt="Product2" width={150} height={150} className="rounded-2xl" />
+      ),
+      realprice: 124.99,
+      discountprice: 74.99,
+      productname: "Levi Shoes",
+      currentQuantity: 1,
+    },
+  ]);
 
-    React.useEffect(() => {
-        let totalPrice = 0;
-        products.forEach((product) => {
-            totalPrice += product.currentQuantity * product.discountprice;
-        });
-        setTotalPrice(parseFloat(totalPrice.toFixed(2)));
-    }, [products]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const shipcost = 19;
 
-    const handleQuantityChange = (key : number, quantity : number) => {
-        const updatedProducts = [...products];
-        updatedProducts[key].currentQuantity = Math.max(quantity, 1);
-        setProducts(updatedProducts);
-    }
+  React.useEffect(() => {
+    let totalPrice = 0;
+    products.forEach((product) => {
+      totalPrice += product.currentQuantity * product.discountprice;
+    });
+    setTotalPrice(parseFloat(totalPrice.toFixed(2)));
+  }, [products]);
 
-    const [email, setEmail] = React.useState('');
-    const [phone, setPhone] = React.useState('');
-    const [name, setName] = React.useState('');
-    const [address, setAddress] = React.useState('');
-    const [city, setCity] = React.useState('');
-    const [country, setCountry] = React.useState('');
-    const [postal, setPostal] = React.useState('');
-    const navigate = useNavigate();
+  const handleQuantityChange = (key: number, quantity: number) => {
+    const updatedProducts = [...products];
+    updatedProducts[key].currentQuantity = Math.max(quantity, 1);
+    setProducts(updatedProducts);
+  };
 
-    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        
-        const formDataObject = {
-            total: totalPrice+shipcost ,
-            email: { email },
-            phone: {phone},
-            name: { name },
-            address: { address },
-            city: { city },
-            country: { country },
-            postal: { postal },
-        };
-        
-        navigate('/success', { state: { formData: formDataObject } })
-    }
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+  const [postal, setPostal] = useState("");
+  const router = useRouter();
+  
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formDataObject = {
+      total: totalPrice + shipcost,
+      email: { email },
+      phone: { phone },
+      name: { name },
+      address: { address },
+      city: { city },
+      country: { country },
+      postal: { postal },
+    };
+
+    router.push(`/success?formData=${JSON.stringify(formDataObject)}`);
+  };
 
     return(
         <div className="min-h-screen font-montserrat sm:p-5">

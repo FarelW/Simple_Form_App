@@ -6,11 +6,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 export default function Home() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/"  element={<Form />} />
-        <Route path="/success" element={<Success />} />
-      </Routes>
-    </Router>
+    <Form/>
   );
 }
